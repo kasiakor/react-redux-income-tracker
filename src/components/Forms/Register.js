@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { registerUserAction } from "../../redux/slice/users/usersSlice";
 
 const Register = () => {
+  
   const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -27,7 +29,6 @@ const Register = () => {
   };
 
   // select data from the store
-
   const { loading, userAuth } = useSelector((state) => {
     return state.users;
   });
@@ -44,9 +45,11 @@ const Register = () => {
               <h4 className="max-w-xs font-heading text-3xl sm:text-4xl mt-2">
                 Register Account
               </h4>
-              <h2 className="text-red-500 text-center">
-                {userAuth?.error?.message}
-              </h2>
+              {userAuth?.error?.message && (
+                <h2 className="text-red-500 text-center">
+                  {userAuth?.error?.message}
+                </h2>
+              )}
             </div>
             <form onSubmit={onSubmitHandler}>
               <div className="mb-4">
