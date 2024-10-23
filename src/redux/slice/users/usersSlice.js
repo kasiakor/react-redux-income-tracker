@@ -16,7 +16,7 @@ const initialState = {
   },
 };
 
-// action creator
+// action creator - register
 export const registerUserAction = createAsyncThunk(
   "user/register",
   async (payload, { dispatch, getState, rejectWithValue }) => {
@@ -44,10 +44,37 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+export const loginUserAction = createAsyncThunk(
+  "user/login",
+  async (payload, { dispatch, getState, rejectWithValue }) => {
+    try {
+      // config
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      // post request
+      const response = await axios.post(
+        `${baseUrl}/users/login`,
+        {
+          email: payload.email,
+          password: payload.password,
+        },
+        config
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
   extraReducers: (builder) => {
+    // register
     builder.addCase(registerUserAction.pending, (state, action) => {
       state.loading = true;
     });
@@ -57,6 +84,19 @@ const usersSlice = createSlice({
       state.userAuth.userInfo = action.payload;
     });
     builder.addCase(registerUserAction.rejected, (state, action) => {
+      state.loading = false;
+      state.userAuth.error = action.payload;
+    });
+    // login
+    builder.addCase(loginUserAction.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(loginUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userAuth.userInfo = action.payload;
+    });
+    builder.addCase(loginUserAction.rejected, (state, action) => {
       state.loading = false;
       state.userAuth.error = action.payload;
     });
