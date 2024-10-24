@@ -46,6 +46,8 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+//login action creator
+
 export const loginUserAction = createAsyncThunk(
   "user/login",
   async (payload, { dispatch, getState, rejectWithValue }) => {
@@ -82,6 +84,30 @@ export const logoutUserAction = createAsyncThunk("user/logout", () => {
   return null;
 });
 
+// get prog=file action creator
+
+export const getProfileAction = createAsyncThunk(
+  "user/getProfile",
+  async (payload, { dispatch, getState, rejectWithValue }) => {
+    try {
+      // get token from state
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      // config
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      // get request
+      const response = await axios.get(`${baseUrl}/users/profile`, config);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -90,7 +116,6 @@ const usersSlice = createSlice({
     builder.addCase(registerUserAction.pending, (state, action) => {
       state.loading = true;
     });
-
     builder.addCase(registerUserAction.fulfilled, (state, action) => {
       state.loading = false;
       state.userAuth.userInfo = action.payload;
@@ -103,7 +128,6 @@ const usersSlice = createSlice({
     builder.addCase(loginUserAction.pending, (state, action) => {
       state.loading = true;
     });
-
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
       state.loading = false;
       state.userAuth.userInfo = action.payload;
@@ -116,6 +140,20 @@ const usersSlice = createSlice({
     builder.addCase(logoutUserAction.fulfilled, (state, action) => {
       state.loading = false;
       state.userAuth.userInfo = null;
+    });
+    // get user profile
+    builder.addCase(getProfileAction.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(getProfileAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.profile = action.payload;
+    });
+    builder.addCase(getProfileAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.profile = {};
     });
   },
 });
