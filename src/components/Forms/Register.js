@@ -32,6 +32,11 @@ const Register = () => {
     return state.users;
   });
 
+  //redirect to login
+  if (userAuth?.userInfo?.status) {
+    window.location.href = "/login";
+  }
+
   return (
     <>
       <section className="relative py-16 bg-gray-50">
