@@ -75,6 +75,13 @@ export const loginUserAction = createAsyncThunk(
   }
 );
 
+// logout action creator
+
+export const logoutUserAction = createAsyncThunk("user/logout", () => {
+  localStorage.removeItem("userInfo");
+  return null;
+});
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -104,6 +111,11 @@ const usersSlice = createSlice({
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.loading = false;
       state.userAuth.error = action.payload;
+    });
+    // remove token from local storage
+    builder.addCase(logoutUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userAuth.userInfo = null;
     });
   },
 });

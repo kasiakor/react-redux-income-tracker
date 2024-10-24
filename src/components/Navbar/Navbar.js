@@ -1,11 +1,14 @@
 import { Disclosure } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { logoutUserAction } from "../../redux/slice/users/usersSlice";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+
   const { userInfo } = useSelector((state) => state?.users.userAuth);
 
   console.log("user info from state", userInfo);
@@ -112,6 +115,7 @@ export default function Navbar() {
                     <div className="flex-shrink-0">
                       <button
                         type="button"
+                        onClick={() => dispatch(logoutUserAction())}
                         className="relative inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                       >
                         <svg
