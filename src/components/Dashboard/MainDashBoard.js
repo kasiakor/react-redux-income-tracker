@@ -27,8 +27,8 @@ const MainDashBoard = () => {
         <h2 className="text-center text-lg text-red-600 mt-5">{error}</h2>
       ) : (
         <>
-          <AccountSummary />
-          <AccountList />
+          <AccountSummary profile={profile} />
+          <AccountList profile={profile} />
         </>
       )}
     </>
