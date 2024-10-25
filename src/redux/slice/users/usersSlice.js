@@ -103,7 +103,7 @@ export const getProfileAction = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message);
+      return rejectWithValue(error?.response?.data?.message);
     }
   }
 );
@@ -145,7 +145,6 @@ const usersSlice = createSlice({
     builder.addCase(getProfileAction.pending, (state, action) => {
       state.loading = true;
     });
-
     builder.addCase(getProfileAction.fulfilled, (state, action) => {
       state.loading = false;
       state.profile = action.payload;
