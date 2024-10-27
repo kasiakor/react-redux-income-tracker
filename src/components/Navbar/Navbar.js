@@ -13,6 +13,7 @@ export default function Navbar() {
   // check if token is stored/ user is logged in
 
   const isLoggedIn = userInfo?.token ? true : false;
+  console.log("token", userInfo?.token);
 
   // redirect to
 
