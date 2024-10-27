@@ -15,8 +15,6 @@ const MainDashBoard = () => {
     return state?.users;
   });
 
-  console.log("users", loading);
-
   // loading and error
 
   return (

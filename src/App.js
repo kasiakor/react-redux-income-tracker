@@ -1,14 +1,15 @@
-import Home from "./components/HomePage/Home";
-import Register from "./components/Forms/Register";
-import MainDashBoard from "./components/Dashboard/MainDashBoard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthRoute from "./AuthRoute/AuthRoute";
 import AccountDetails from "./components/Dashboard/AccountDetails";
-import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AddTransaction from "./components/Forms/AddTransaction";
-import EditTransaction from "./components/Forms/EditTransaction";
+import MainDashBoard from "./components/Dashboard/MainDashBoard";
 import AddAccount from "./components/Forms/AddAccount";
+import AddTransaction from "./components/Forms/AddTransaction";
 import EditAccount from "./components/Forms/EditAccount";
+import EditTransaction from "./components/Forms/EditTransaction";
 import Login from "./components/Forms/Login";
+import Register from "./components/Forms/Register";
+import Home from "./components/HomePage/Home";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<MainDashBoard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <AuthRoute>
+              <MainDashBoard />
+            </AuthRoute>
+          }
+        />
         <Route path="/account" element={<AccountDetails />} />
         <Route path="/account/:id" element={<AccountDetails />} />
         <Route path="/add-transaction/:id" element={<AddTransaction />} />
