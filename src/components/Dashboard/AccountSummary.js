@@ -1,7 +1,7 @@
 import React from "react";
 
 const AccountSummary = ({ profile }) => {
-  console.log("profile", profile.accounts);
+  console.log("accounts:", profile.accounts);
   return (
     <>
       {profile?.accounts?.length <= 0 ? (
