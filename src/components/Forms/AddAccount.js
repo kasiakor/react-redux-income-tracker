@@ -1,26 +1,33 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createAccountAction } from "../../redux/slice/accounts/accountsSlice";
 
 const AddAccount = () => {
-  const [transaction, setTransaction] = useState({
-    title: "",
-    initialBalance: "",
-    transactionType: "",
-    notes: "",
+  // disptach
+  const dispatch = useDispatch();
+
+  const [account, setAccount] = useState({
+    name: "",
     accountType: "",
+    initialBalance: "",
+    notes: "",
   });
   //---Destructuring---
-  const { title, initialBalance, notes, accountType } = transaction;
+  const { name, accountType, initialBalance, notes } = account;
   //---onchange handler----
   const onChange = (e) => {
-    setTransaction({ ...transaction, [e.target.name]: e.target.value });
+    setAccount({ ...account, [e.target.name]: e.target.value });
+    console.log("[e.target.name]", [e.target.name]);
+    console.log("[e.target.value", e.target.value);
   };
 
   //---onsubmit handler----
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(transaction);
+    dispatch(createAccountAction(account));
+    console.log(account);
   };
+
   return (
     <section className="py-16 xl:pb-56 bg-white overflow-hidden">
       <div className="container px-4 mx-auto">
@@ -34,9 +41,9 @@ const AddAccount = () => {
           <form onSubmit={onSubmit}>
             <label className="block mb-5">
               <input
-                value={title}
+                value={name}
                 onChange={onChange}
-                name="title"
+                name="name"
                 className="px-4 py-3.5 w-full text-gray-500 font-medium placeholder-gray-500 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
                 id="signUpInput2-1"
                 type="text"
@@ -60,7 +67,7 @@ const AddAccount = () => {
                 value={accountType}
                 onChange={onChange}
                 name="accountType"
-                class="appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-200 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+                className="appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-200 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
               >
                 <option>-- Select Account Type --</option>
                 <option value="Savings">Savings</option>

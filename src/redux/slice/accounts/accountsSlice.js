@@ -16,10 +16,7 @@ const initialState = {
 export const createAccountAction = createAsyncThunk(
   "accounts/createAccount",
   async (
-    name,
-    accountType,
-    initialBalance,
-    notes,
+    { name, accountType, initialBalance, notes },
     { rejectWithValue, getState, dispatch }
   ) => {
     try {
