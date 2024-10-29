@@ -48,7 +48,7 @@ const AccountList = ({ profile: { accounts } }) => {
               Add New Account
             </Link>
             {accounts?.map((account) => (
-              <div className="flex flex-wrap -mx-4">
+              <div className="flex flex-wrap -mx-4" key={account?._id}>
                 <div className="w-full md:w-1/2 px-4 mb-8">
                   <a className="group" href="/#">
                     <div className="bg-coolGray-50 group-hover:bg-coolGray-100 rounded-md shadow-md transition duration-200">
@@ -63,7 +63,7 @@ const AccountList = ({ profile: { accounts } }) => {
                         </div>
                         <div className="w-full lg:w-1/3 px-4 lg:text-right">
                           <Link
-                            to={`/account/${account?._id}`}
+                            to={`/accounts/${account?._id}`}
                             className="inline-flex ml-auto items-center font-medium leading-6 text-green-500 group-hover:text-green-600 transition duration-200"
                           >
                             <span className="mr-2">View Account</span>

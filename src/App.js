@@ -27,7 +27,7 @@ function App() {
           }
         />
         <Route path="/account" element={<AccountDetails />} />
-        <Route path="/account/:id" element={<AccountDetails />} />
+        <Route path="/accounts/:id" element={<AccountDetails />} />
         <Route path="/add-transaction/:id" element={<AddTransaction />} />
         <Route path="/edit-transaction/:id" element={<EditTransaction />} />
         <Route path="/add-account" element={<AddAccount />} />
