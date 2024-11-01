@@ -16,9 +16,15 @@ const AccountDetails = () => {
 
   // get account from store, destructed accounts
   const { account, loading, error } = useSelector((state) => state?.accounts);
-  console.log("account", account);
+  console.log("transactions:", account?.data?.transactions);
   return (
     <>
+      {loading && (
+        <h2 className="text-center text-xl text-green-800 mt-5">Loading...</h2>
+      )}
+      {error && (
+        <h2 className="text-center text-xl text-red-800 mt-5">{error}</h2>
+      )}
       {/* Account Summary */}
       <section
         className="py-20 xl:pt-24 xl:pb-32 bg-white"
@@ -89,8 +95,13 @@ const AccountDetails = () => {
           </div>
         </div>
       </section>
-
-      <TransactionList />
+      {account?.data?.transactions.length <= 0 ? (
+        <h2 className="text-center text-xl text-indigo-800 mb-5">
+          Not found transactions
+        </h2>
+      ) : (
+        <TransactionList transactions={account?.data?.transactions} />
+      )}
     </>
   );
 };

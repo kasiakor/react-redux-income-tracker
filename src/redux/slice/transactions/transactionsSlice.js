@@ -20,7 +20,7 @@ export const createTransactionsAction = createAsyncThunk(
     const { name, transactionType, amount, category, notes } = payload;
     try {
       // get token from store
-      const token = getState()?.users?.userAuth?.userInfo;
+      const token = getState()?.users?.userAuth?.userInfo?.token;
 
       const config = {
         headers: {
