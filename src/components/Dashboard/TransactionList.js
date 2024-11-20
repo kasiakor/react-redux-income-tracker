@@ -10,31 +10,9 @@ const TransactionList = ({ transactions }) => {
             Latest Transactions List
           </h2>
           {transactions?.map((transaction) => (
-            <div className="px-6 overflow-x-auto">
+            <div className="px-6 overflow-x-auto" key={transaction._id}>
               <table className="w-full">
                 <tbody>
-                  <tr className="whitespace-nowrap h-11 bg-coolGray-50 bg-opacity-80">
-                    <th className="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left rounded-l-md">
-                      <p>{transaction?.name}</p>
-                    </th>
-                    <th className="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">
-                      {transaction?.notes}
-                    </th>
-                    <th className="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">
-                      {transaction?.transactionType}
-                    </th>
-                    <th className="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">
-                      {transaction?.amount}
-                    </th>
-                    <th className="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">
-                      {transaction?.category}
-                    </th>
-
-                    <th className="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">
-                      {new Date(transaction?.name).toLocaleDateString()}
-                    </th>
-                  </tr>
-
                   <tr className="h-18 border-b border-coolGray-100">
                     <th className="whitespace-nowrap px-4 bg-white text-left">
                       <div className="flex items-center -m-2">
@@ -56,25 +34,25 @@ const TransactionList = ({ transactions }) => {
                         </div>
                         <div className="w-auto p-2">
                           <p className="text-sm font-medium text-coolGray-800">
-                            Coding course
+                            {transaction?.name}
                           </p>
                         </div>
                       </div>
                     </th>
                     <th className="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-800 text-center">
-                      Salary for this month
+                      {transaction?.notes}
                     </th>
                     <th className="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-800 text-center">
-                      Income
+                      {transaction?.transactionType}
                     </th>
                     <th className="whitespace-nowrap px-4 bg-white text-sm font-medium text-green-500 text-center">
-                      $12,450.00
+                      {transaction?.amount}
                     </th>
                     <th className="whitespace-nowrap px-4 bg-white text-sm font-medium  text-center">
-                      Salary
+                      {transaction?.category}
                     </th>
                     <th className="whitespace-nowrap px-4 bg-white text-sm font-medium text-center">
-                      2022/12/12
+                      {new Date(transaction?.date).toLocaleDateString()}
                     </th>
                     <Link
                       to={"/edit-transaction/8"}
