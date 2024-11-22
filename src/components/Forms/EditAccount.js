@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getSingleAccountAction,
   updateAccountAction,
@@ -14,6 +14,9 @@ const EditAccount = () => {
 
   // get instance of dispatch
   const dispatch = useDispatch();
+
+  // get navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getSingleAccountAction(id));
@@ -40,6 +43,18 @@ const EditAccount = () => {
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
   };
 
+  // redirect
+  useEffect(() => {
+    setTimeout(() => {
+      if (isUpdated) {
+        navigate("/dashboard");
+        window.location.reload();
+      }
+    }, 3000);
+
+    // eslint-disable-next-line
+  }, [isUpdated]);
+
   //---onsubmit handler----
   const onSubmit = (e) => {
     e.preventDefault();
@@ -56,6 +71,11 @@ const EditAccount = () => {
           <p className="mb-12 font-medium text-lg text-gray-600 leading-normal">
             You are editing.... {account?.data?.name} project
           </p>
+          {error && (
+            <p className="mb-12 font-medium text-lg text-gray-600 leading-normal">
+              {error}
+            </p>
+          )}
           <form onSubmit={onSubmit}>
             <label className="block mb-5">
               <input
@@ -120,12 +140,21 @@ const EditAccount = () => {
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              className="mb-8 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
-            >
-              Update Account
-            </button>
+            {loading ? (
+              <button
+                disabled
+                className="mb-8 py-4 px-9 w-full text-white font-semibold border border-grey-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-grey-700 transition ease-in-out duration-200"
+              >
+                Loading ...
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="mb-8 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+              >
+                Update Account
+              </button>
+            )}
             <Link to={"/account/8"} className="font-medium">
               <a className="text-indigo-600 hover:text-indigo-700" href="/#">
                 Back To Account
