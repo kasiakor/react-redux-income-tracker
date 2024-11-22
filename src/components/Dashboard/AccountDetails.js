@@ -48,6 +48,7 @@ const AccountDetails = () => {
   const totalBalance = totalIncome - totalExpenses;
 
   console.log("totalBalance", totalBalance);
+  console.log("account data", account?.data);
 
   return (
     <>
@@ -77,7 +78,7 @@ const AccountDetails = () => {
               {account?.data?.notes}
             </p>
             <Link
-              to={"/edit-account/1"}
+              to={`/edit-account/${account?.data?._id}`}
               className="inline-flex text-center  mb-8 items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Edit Account

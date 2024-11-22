@@ -38,6 +38,32 @@ export const createAccountAction = createAsyncThunk(
   }
 );
 
+// action creator - update account
+export const updateAccountAction = createAsyncThunk(
+  "accounts/updateAccount",
+  async (
+    { name, accountType, initialBalance, notes, id },
+    { rejectWithValue, getState, dispatch }
+  ) => {
+    try {
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `${baseUrl}/accounts/${id}`,
+        { name, accountType, initialBalance, notes },
+        config
+      );
+      return response.data;
+    } catch (error) {
+      rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // action creator - get single account
 export const getSingleAccountAction = createAsyncThunk(
   "accounts/getAccount",
@@ -77,6 +103,24 @@ const accountsSlice = createSlice({
       state.account = null;
       state.error = action.payload;
     });
+    // update account
+    builder.addCase(updateAccountAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateAccountAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.isUpdated = true;
+      state.account = action.payload;
+    });
+    builder.addCase(updateAccountAction.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.account = null;
+      state.isUpdated = false;
+      state.error = action.payload;
+    });
+
     // get single account
     builder.addCase(getSingleAccountAction.pending, (state, action) => {
       state.loading = true;
